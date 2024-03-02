@@ -4,6 +4,7 @@ import Compiler from "./pages/Compiler";
 import Header from "./components/Header";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./components/theme-provider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/compiler" element={<Compiler />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </ThemeProvider>
   );

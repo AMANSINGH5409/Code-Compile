@@ -13,10 +13,15 @@ import {
   updateCurrentLanguage,
 } from "@/redux/slices/compilerSlice";
 import { RootState } from "@/redux/store";
+import { handleError } from "@/utils/handleError";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const HelperHeader = () => {
   const dispatch = useDispatch();
-  const { currentLanguage } = useSelector((state: RootState) => state.compiler);
+  const { currentLanguage, fullCode } = useSelector(
+    (state: RootState) => state.compiler
+  );
 
   const handleLangChange = (
     lang: CompilerSliceStateType["currentLanguage"]
@@ -24,10 +29,27 @@ const HelperHeader = () => {
     dispatch(updateCurrentLanguage(lang));
   };
 
+  const handleCodeSave = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/compiler/save", {
+        fullCode,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   return (
     <div className="__helper_header h-[50px] flex justify-between items-center bg-black text-white p-2">
       <div className="__btn_container flex items-center gap-4">
         <Button
+          onClick={handleCodeSave}
           className="flex justify-center items-center gap-1"
           variant={"success"}
         >
