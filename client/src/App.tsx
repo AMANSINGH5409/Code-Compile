@@ -15,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/compiler" element={<Compiler />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/compiler/:codeId" element={<Compiler />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
